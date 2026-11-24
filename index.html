@@ -169,8 +169,8 @@ h1 span{color:var(--laranja)}
 #tvit{background:radial-gradient(ellipse at 50% 30%,#cfe9b8,#a8d2c8 70%)}
 .fimt{font-size:clamp(1.8rem,7vw,2.9rem);font-weight:900;letter-spacing:1px}
 #tgo .fimt{color:#9c2a2a}#tfase .fimt,#tvit .fimt{color:#1f6b3a}
-.fimstat{display:flex;gap:18px;margin:4px 0}
-.fimstat div{background:rgba(255,255,255,.55);border-radius:13px;padding:9px 18px;min-width:84px}
+.fimstat{display:flex;gap:12px;margin:4px 0}
+.fimstat{flex-wrap:wrap;justify-content:center}.fimstat>div{background:rgba(255,255,255,.55);border-radius:13px;padding:9px 16px;min-width:84px}
 .fimstat .n{font-size:1.6rem;font-weight:900}.fimstat .l{font-size:.6rem;letter-spacing:1px;color:#5a6a5e;text-transform:uppercase;font-weight:700}
 .fimmsg{font-size:.9rem;color:#2a5a3a;max-width:340px;line-height:1.5;font-weight:600;margin:2px 0 6px}
 .fimsci{font-size:.68rem;color:#4a5a4e;max-width:350px;line-height:1.55;font-style:italic;border-top:1px solid rgba(0,0,0,.12);padding-top:11px;margin-top:4px}
@@ -209,7 +209,7 @@ h1 span{color:var(--laranja)}
   <button class="btn" id="bini">▸ PILOTAR</button>
   <button class="btn2" id="bcomo" style="margin-top:-2px">❓ Como jogar</button>
   <button class="btn2" id="balbum" style="margin-top:-2px">📷 Álbum do Pantanal</button>
-  <div class="rbox"><h3>Melhores piloteiros</h3><div id="rklista"></div></div>
+  <div class="rbox"><h3>Ranking global</h3><div id="rklista"></div><div id="rknota" style="font-size:.66rem;color:#7a8a7e;margin-top:6px"></div></div>
   <p class="sci">Trajeto e fauna baseados na Bacia do Alto Paraguai. Dinâmica de canal ligada ao
   pulso de inundação (Junk et al., 1989; Hamilton et al., 1996). Jogo educativo, não é carta náutica.</p>
 </div>
@@ -259,7 +259,8 @@ h1 span{color:var(--laranja)}
   </div>
   <div class="fimmsg" id="gmsg"></div>
   <div class="fimsci" id="gsci"></div>
-  <div class="gbtns"><button class="btn" id="bgnovo" style="padding:13px 38px">↻ DE NOVO</button>
+  <input class="ginp" id="gnome" placeholder="Seu nome no ranking" maxlength="14">
+  <div class="gbtns"><button class="btn2" id="bgsalv">★ SALVAR</button><button class="btn" id="bgnovo" style="padding:13px 38px">↻ DE NOVO</button>
     <button class="btn2" id="bgmenu">MENU</button></div>
 </div>
 
@@ -404,7 +405,7 @@ const somFase=()=>[523,659,784,1046,1318].forEach((f,i)=>setTimeout(()=>beep(f,0
 const FASES=[
   {
     id:1, nome:'Alto Pantanal', cor:'#7c4', emoji:'🌾',
-    desc:'Canal estreito e sinuoso, águas rasas das cabeceiras.',
+    desc:'Canal estreito e sinuoso, águas rasas do alto curso.',
     metaKm:8,
     larguraBase:0.78, larguraVar:0.08, meandro:0.13, periodo:360, // estreito (deixa margem p/ árvores)
     canalLarg:0.32, canalMig:0.36,                                 // canal navegável
@@ -412,7 +413,7 @@ const FASES=[
     obst:['tronco','pedra','jacare','camalote','pedra','jacare','camalote'],
     densObst:0.9, densFauna:1.0, densFuel:1.0,
     paleta:{terra:'#5a8c44', terraEsc:'#3d6b34', fundo:'#1f5566', raso:'#7fb8b0', banco:'#d9c48f'},
-    marco:{nome:'Cabeceiras do Rio Paraguai', desc:'Trecho jovem e estreito perto de Cáceres: berço de peixes migradores e início da grande planície (Oliveira Junior et al., 2019).'},
+    marco:{nome:'Rio Paraguai em Cáceres', desc:'Trecho jovem e estreito perto de Cáceres: berço de peixes migradores e início da grande planície (Oliveira Junior et al., 2019).'},
     sci:'No Alto Pantanal o rio é jovem e estreito. Na seca, o canal navegável encolhe e o talvegue (parte funda) muda de margem a cada curva. Ler a água é questão de sobrevivência.',
   },
   {
@@ -611,8 +612,8 @@ const DOBS={
 const DDECOR={
   aguape:{lbl:'Aguapé',img:'aguape',ic:'🌿',pts:60,info:'Eichhornia crassipes. Planta aquática flutuante; forma os camalotes e abriga peixes e aves.'},
   arv_roxa:{lbl:'Ipê-roxo',img:'arv_roxa',ic:'🌳',pts:90,info:'Handroanthus. A floração roxa marca a estação seca no Pantanal.'},
-  arv_amarela:{lbl:'Ipê-amarelo',img:'arv_amarela',ic:'🌳',pts:90,info:'Handroanthus albus. Explode em flores amarelas antes das chuvas.'},
-  arv_palm:{lbl:'Carandá',img:'arv_palm',ic:'🌴',pts:80,info:'Copernicia alba. Palmeira-símbolo do Pantanal, resiste à cheia e à seca.'},
+  arv_amarela:{lbl:'Ipê-amarelo',img:'arv_amarela',ic:'🌳',pts:90,info:'Tabebuia aurea, o paratudo. Floresce em amarelo no fim da seca, antes das chuvas.'},
+  arv_palm:{lbl:'Carandá',img:'arv_palm',ic:'🌴',pts:80,info:'Copernicia alba. Palmeira típica dos campos alagáveis do Pantanal, resiste à cheia e à seca.'},
   arv_palm2:{lbl:'Acuri',img:'arv_palm2',ic:'🌴',pts:80,info:'Attalea phalerata. Palmeira cujos frutos alimentam araras e a fauna.'},
   arv_verde:{lbl:'Mata ciliar',img:'arv_verde',ic:'🌳',pts:60,info:'Vegetação das margens que segura o solo e sombreia o rio.'},
   arv_arbusto:{lbl:'Arbusto ribeirinho',img:'arv_arbusto',ic:'🌿',pts:50,info:'Moita da beira do rio, refúgio de pequenos animais e aves.'},
@@ -764,14 +765,41 @@ let marcoMostrado=false;
 const RK='piloto_pant_rk_v2';
 const getRk=()=>{try{return JSON.parse(localStorage.getItem(RK))||[];}catch{return[];}};
 const salvaRk=r=>{try{localStorage.setItem(RK,JSON.stringify(r));}catch{}};
-function addRk(nome,p,fa){const r=getRk();r.push({nome:nome||'Piloteiro',pts:p,fauna:fa});
-  r.sort((a,b)=>b.pts-a.pts);salvaRk(r.slice(0,10));}
+const escH=t=>String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const firebaseConfig={apiKey:"AIzaSyCbXi3UCVl8oLleBzGb6DqWSxbZmZU2yDQ",authDomain:"jogos-ranking.firebaseapp.com",
+  databaseURL:"https://jogos-ranking-default-rtdb.firebaseio.com",projectId:"jogos-ranking",storageBucket:"jogos-ranking.firebasestorage.app",
+  messagingSenderId:"958784915420",appId:"1:958784915420:web:4212d3ad278f02d600f119"};
+const GAME_ID="piloto-pantaneiro";
+let db=null,fsFns=null,rkGlobal=null;
+(async()=>{try{const a=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+  const f=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+  db=f.getFirestore(a.initializeApp(firebaseConfig));fsFns=f;carregaRkGlobal();}catch(e){renderRk();}})();
+async function carregaRkGlobal(){
+  if(!db)return;
+  try{const q=fsFns.query(fsFns.collection(db,'games',GAME_ID,'scores'),fsFns.orderBy('score','desc'),fsFns.limit(10));
+    const snap=await fsFns.getDocs(q);rkGlobal=[];snap.forEach(d=>rkGlobal.push(d.data()));}catch(e){rkGlobal=null;}
+  renderRk();
+}
+async function addRk(nome,p,fa,nivel){const r=getRk();r.push({nome:nome||'Piloteiro',pts:p,fauna:fa});
+  r.sort((a,b)=>b.pts-a.pts);salvaRk(r.slice(0,10));
+  if(!db)return false;
+  try{await fsFns.addDoc(fsFns.collection(db,'games',GAME_ID,'scores'),{name:(nome||'Piloteiro').slice(0,20),score:p,fauna:fa,level:nivel,ts:fsFns.serverTimestamp()});
+    carregaRkGlobal();return true;}catch(e){return false;}}
 const melhorPts=()=>{const r=getRk();return r.length?r[0].pts:0;};
 function renderRk(){
+  const nota=document.getElementById('rknota');
+  const el0=document.getElementById('rklista');
+  if(rkGlobal){
+    nota.textContent='Maior pontuação primeiro. Ao lado, a fase alcançada.';
+    if(!rkGlobal.length){el0.innerHTML='<div class="rr" style="justify-content:center;color:#7a8a7e;font-style:italic">Seja o primeiro do ranking!</div>';return;}
+    el0.innerHTML=rkGlobal.map((x,i)=>`<div class="rr"><span class="rpos">${i+1}º</span><span>${escH(x.name||'?')}</span><span class="rpts">${(Number(x.score)||0).toLocaleString('pt-BR')} · ${escH(x.level||'')}</span></div>`).join('');
+    return;
+  }
+  nota.textContent=db===null?'Ranking global indisponível sem internet. Mostrando os recordes deste aparelho.':'';
   const r=getRk(),el=document.getElementById('rklista');
   if(!r.length){el.innerHTML='<div class="rr" style="justify-content:center;color:#7a8a7e;font-style:italic">Nenhuma travessia ainda</div>';return;}
   const ic=['🥇','🥈','🥉','4°','5°'];
-  el.innerHTML=r.slice(0,5).map((x,i)=>`<div class="rr"><span class="rpos">${ic[i]}</span><span>${x.nome}</span><span class="rpts">${x.pts.toLocaleString()}</span></div>`).join('');
+  el.innerHTML=r.slice(0,5).map((x,i)=>`<div class="rr"><span class="rpos">${ic[i]}</span><span>${escH(x.nome)}</span><span class="rpts">${x.pts.toLocaleString('pt-BR')}</span></div>`).join('');
 }
 
 /* ============================================================
@@ -796,7 +824,7 @@ function iniciarFase(idx){
   // alguns obstáculos e um bidão à frente
   obs.push(geraObs());obs[0].y=-H*0.4;
   fuels.push(geraFuel());fuels[0].y=-H*0.6;
-  document.getElementById('hrec').textContent=melhorPts()?melhorPts().toLocaleString():'—';
+  document.getElementById('hrec').textContent=melhorPts()?melhorPts().toLocaleString('pt-BR'):'—';
   ['ti','tgo','tfase','tvit'].forEach(id=>document.getElementById(id).style.display='none');
   document.getElementById('hud').style.display='flex';
   document.getElementById('barras').style.display='flex';
@@ -914,7 +942,7 @@ function update(){
 
   // HUD
   document.getElementById('hkm').innerHTML=kmFase.toFixed(1)+'<small>/'+F.metaKm+'km</small>';
-  document.getElementById('hpts').textContent=(ptsTotal+pts).toLocaleString();
+  document.getElementById('hpts').textContent=(ptsTotal+pts).toLocaleString('pt-BR');
   const cf=document.getElementById('comb-f');cf.style.width=comb+'%';
   cf.style.background=comb<22?'#d64545':comb<45?'#e0a528':'#e07a28';
   // carga do TURBO mostrada DENTRO do próprio botão (sem barra separada — evita confusão)
@@ -1506,7 +1534,7 @@ function completarFase(){
   document.getElementById('ftit').textContent='FASE '+F.id+' COMPLETA';
   document.getElementById('fsubt').textContent=F.emoji+' '+F.nome+' atravessado!';
   document.getElementById('fkm').textContent=F.metaKm;
-  document.getElementById('fpts').textContent=pts.toLocaleString();
+  document.getElementById('fpts').textContent=pts.toLocaleString('pt-BR');
   document.getElementById('ffauna').textContent=faunaVista;
   document.getElementById('fsci').textContent=F.sci;
   pausarHud();
@@ -1518,19 +1546,20 @@ function derrota(titulo){
   document.getElementById('gotit').textContent=titulo;
   document.getElementById('gocau').textContent=causaGO;
   document.getElementById('gkm').textContent=kmFase.toFixed(1);
-  document.getElementById('gpts').textContent=(ptsTotal+pts).toLocaleString();
+  document.getElementById('gpts').textContent=(ptsTotal+pts).toLocaleString('pt-BR');
   const dicas=['A água escura é mais funda. O canal serpenteia, não fica no meio.',
     'Combustível baixo? Desvie do perigo e mire o próximo bidão ⛽.',
     'Encalhou? Segure o FREIO para reduzir e procure a água escura.',
     'No Pantanal o canal muda com o pulso de inundação: na seca ele estreita.'];
   document.getElementById('gmsg').textContent='💡 '+dicas[(Math.random()*dicas.length)|0];
   document.getElementById('gsci').textContent=F.sci;
+  {const b=document.getElementById('bgsalv');b.disabled=false;b.textContent='★ SALVAR';}
   pausarHud();
   document.getElementById('tgo').style.display='flex';
 }
 function vitoriaFinal(){
   ativo=false;cancelAnimationFrame(raf);motorVol(0);
-  document.getElementById('vpts').textContent=ptsTotal.toLocaleString();
+  document.getElementById('vpts').textContent=ptsTotal.toLocaleString('pt-BR');
   document.getElementById('vfauna').textContent=faunaTotal;
   document.getElementById('vtxt').textContent='Você cruzou os três Pantanais — Alto, Médio e Baixo — de Cáceres a Corumbá. Piloteiro de verdade.';
   document.getElementById('vsci').textContent='As Unidades de Conservação da rota (ESEC Taiamã, Parque Nacional do Pantanal) protegem berçários de peixes e rotas de fauna. Pilotar com leitura do rio reduz encalhes, colisões e a erosão das margens.';
@@ -1563,8 +1592,13 @@ document.getElementById('bfnext').addEventListener('click',()=>iniciarFase(faseA
 document.getElementById('bgmenu').addEventListener('click',voltarMenu);
 document.getElementById('bvmenu').addEventListener('click',voltarMenu);
 document.getElementById('bvsalv').addEventListener('click',()=>{
-  addRk(document.getElementById('vnome').value.trim(),ptsTotal,faunaTotal);
+  addRk(document.getElementById('vnome').value.trim(),ptsTotal,faunaTotal,'Travessia completa');
   document.getElementById('vnome').value='';voltarMenu();
+});
+document.getElementById('bgsalv').addEventListener('click',()=>{
+  const b=document.getElementById('bgsalv'); if(b.disabled)return; b.disabled=true;
+  addRk(document.getElementById('gnome').value.trim(),ptsTotal+pts,faunaTotal+faunaVista,'Fase '+F.id);
+  b.textContent='✓ SALVO';
 });
 function voltarMenu(){['tgo','tfase','tvit','talbum','tcomo'].forEach(id=>document.getElementById(id).style.display='none');
   document.getElementById('ti').style.display='flex';renderFases();renderRk();ativo=false;}
