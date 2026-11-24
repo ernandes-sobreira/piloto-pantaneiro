@@ -443,6 +443,32 @@ const FASES=[
     marco:{nome:'Porto de Corumbá', desc:'O Paraguai engorda com os grandes afluentes e ruma ao maior porto fluvial do Pantanal.'},
     sci:'No Baixo Pantanal a correnteza domina: o barco desce rápido e o leme pesa. Bancos de areia da dragagem e o vai-e-vem de barcaças tornam a leitura antecipada essencial.',
   },
+  {
+    id:4, nome:'Pantanal na cheia', cor:'#29a3c9', emoji:'🌧️',
+    desc:'Rio fora da calha, correnteza forte e muitos camalotes descendo.',
+    metaKm:14,
+    larguraBase:0.9, larguraVar:0.04, meandro:0.06, periodo:620,
+    canalLarg:0.42, canalMig:0.38,
+    corrente:0.38, velMundo:1.42,
+    obst:['camalote','tronco','camalote','barco','camalote','tronco','jacare'],
+    densObst:1.35, densFauna:0.9, densFuel:0.9,
+    paleta:{terra:'#5f9a4c', terraEsc:'#3f7436', fundo:'#1b5f74', raso:'#8cc6bf', banco:'#cfc79a'},
+    marco:{nome:'Rio fora da calha', desc:'Na cheia o Paraguai transborda e alaga campos e matas. Camalotes de aguapé se soltam das margens e descem com a correnteza (Junk et al., 1989).'},
+    sci:'Na cheia o pulso de inundação espalha a água pela planície. O rio parece um mar, mas o canal fundo continua sendo uma faixa. Troncos e camalotes arrancados das margens descem rápido.',
+  },
+  {
+    id:5, nome:'Seca extrema', cor:'#c9822e', emoji:'🏜️',
+    desc:'Canal estreito, pedrais e bancos de areia expostos. Pouco espaço para errar.',
+    metaKm:10,
+    larguraBase:0.6, larguraVar:0.1, meandro:0.16, periodo:400,
+    canalLarg:0.22, canalMig:0.42,
+    corrente:0.08, velMundo:0.95,
+    obst:['pedra','tronco','jacare','pedra','rede','tronco','jacare'],
+    densObst:1.45, densFauna:1.1, densFuel:1.05,
+    paleta:{terra:'#8a8a4c', terraEsc:'#6b6b38', fundo:'#2a5a62', raso:'#9cc2b2', banco:'#e2cf98'},
+    marco:{nome:'Régua de Ladário', desc:'Em outubro de 2024 a régua de Ladário marcou -69 cm, o nível mais baixo desde o início dos registros em 1900. O zero da régua não é o fundo do rio, mas o canal fica estreito.'},
+    sci:'Na seca extrema o canal encolhe, pedrais e bancos de areia aparecem e os jacarés se concentram nos poços que sobram. Com a régua de Ladário abaixo de um metro, o transporte de minério pelo rio praticamente para.',
+  },
 ];
 let faseAtual=0;           // índice da fase selecionada/jogando
 let faseMaxLib=1;          // fases liberadas (progressão); 1 = só a primeira
@@ -1561,7 +1587,7 @@ function vitoriaFinal(){
   ativo=false;cancelAnimationFrame(raf);motorVol(0);
   document.getElementById('vpts').textContent=ptsTotal.toLocaleString('pt-BR');
   document.getElementById('vfauna').textContent=faunaTotal;
-  document.getElementById('vtxt').textContent='Você cruzou os três Pantanais — Alto, Médio e Baixo — de Cáceres a Corumbá. Piloteiro de verdade.';
+  document.getElementById('vtxt').textContent='Você desceu o Paraguai de Cáceres a Corumbá e ainda enfrentou a cheia e a seca extrema. Piloteiro de verdade.';
   document.getElementById('vsci').textContent='As Unidades de Conservação da rota (ESEC Taiamã, Parque Nacional do Pantanal) protegem berçários de peixes e rotas de fauna. Pilotar com leitura do rio reduz encalhes, colisões e a erosão das margens.';
   pausarHud();
   document.getElementById('tvit').style.display='flex';
